@@ -33,7 +33,7 @@ export default function Quiz () {
           handleOption([
             quizArray[currentQuestion].correct_answer,
             ...quizArray[currentQuestion].incorrect_answers
-          ])
+          ].sort(() => Math.random() - 0.5))
       )
     }
     if (quizArray[currentQuestion].difficulty === 'easy') {
@@ -48,7 +48,11 @@ export default function Quiz () {
   }, [currentQuestion])
 
   // sort answers
-  const handleOption = (option) => (option.sort(() => Math.random - 0.5))
+  const handleOption = (option) => {
+    return (
+      option.sort(() => Math.random - 0.5)
+    )
+  }
 
   // handle answers
   const handleSelectedAnswer = (e) => {
