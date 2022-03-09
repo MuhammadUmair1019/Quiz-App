@@ -71,7 +71,7 @@ export default function Quiz () {
     }
     setScore(Math.ceil(((answer?.correct + 1) / (currentQuestion + 1)) * 100))
     setMaxScore(
-      (((answer.correct + 1) / (quizArray.length)) * 100).toFixed(0))
+      (((quizArray.length - (answer.correct + 1)) / (quizArray.length)) * 100).toFixed(0))
   }
 
   // handle new question
