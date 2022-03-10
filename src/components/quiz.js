@@ -98,6 +98,9 @@ export default function Quiz () {
 
   const lightgray = () => (((currentQuestion + 1) / quizArray.length) * 100 - scoreBar.gray - scoreBar.black)
 
+  // result message
+  const message = 'Try Again!!'
+
   return (
     <QuizContainer>
       <QuizProgBar style={{ width: `${loadProgress}%` }} />
@@ -139,7 +142,7 @@ export default function Quiz () {
             : (
                 ''
               )}
-          {result && <Button onClick={handleResult}> Try again ! </Button>}
+          {result && <Button onClick={handleResult}> {message}</Button>}
         </NextQuestion>
       </div>
       <ScoreBar
