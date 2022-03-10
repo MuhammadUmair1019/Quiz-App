@@ -1,18 +1,18 @@
-import styled from 'styled-components'
+import { ScoreBarConainer } from "./index"
 
 export default function ({ score, maxScore, scoreBar }) {
   return (
-    <QuizScoreBar>
-      <Conainer>
+    <div>
+      <div>
         <ScoreBarConainer>
-          <Score>
+          <div>
             Score {' '}
             {score}%
-          </Score>
-          <MaxScore>
+          </div>
+          <div>
             Max Score {' '}
             {maxScore}%
-          </MaxScore>
+          </div>
         </ScoreBarConainer>
         {/* using bootstrap progress bar classes */}
         <div className='border border-5 rounded-pill border-light'>
@@ -52,21 +52,11 @@ export default function ({ score, maxScore, scoreBar }) {
             />
           </div>
         </div>
-      </Conainer>
-    </QuizScoreBar>
+      </div>
+    </div>
   )
 }
 
-const QuizScoreBar = styled.div``
 
-const ScoreBarConainer = styled.div`
-    display: flex ;
-    justify-content: space-between;
-    align-items: center;
 
-`
-const Conainer = styled.div``
 
-const Score = styled.div``
-
-const MaxScore = styled.div``

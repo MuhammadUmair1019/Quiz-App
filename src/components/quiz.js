@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import styled from '@emotion/styled'
 import { quizArray } from '../data/core'
 import Rating from '@mui/material/Rating'
-import ScoreBar from './score-bar'
+import ScoreBar from './ScoreBar'
+import { QuizContainer, QuizProgBar, QuizButtons, InformAnswer, Button, NextQuestion } from "./index"
 
 export default function Quiz () {
   // useState variables
@@ -25,22 +25,26 @@ export default function Quiz () {
     lightgray: 0
   })
 
+  // destructure quiz array
+  const {category, difficulty, question, correct_answer, incorrect_answers} = quizArray[currentQuestion];
+
+  // handle default behavoir of useEffect
   useEffect(() => {
     window.scroll(0, 0)
     if (currentQuestion < 20) {
       setOptions(
         quizArray &&
           handleOption([
-            quizArray[currentQuestion].correct_answer,
-            ...quizArray[currentQuestion].incorrect_answers
+            correct_answer,
+            ...incorrect_answers
           ].sort(() => Math.random() - 0.5))
       )
     }
-    if (quizArray[currentQuestion].difficulty === 'easy') {
+    if (difficulty === 'easy') {
       setRating(1)
-    } else if (quizArray[currentQuestion].difficulty === 'medium') {
+    } else if (difficulty === 'medium') {
       setRating(2)
-    } else if (quizArray[currentQuestion].difficulty === 'hard') {
+    } else if (difficulty === 'hard') {
       setRating(3)
     } else {
       setRating(0)
@@ -60,7 +64,7 @@ export default function Quiz () {
       setResult(true)
     }
     setDiableOption(true)
-    if (e.target.innerText === quizArray[currentQuestion].correct_answer) {
+    if (e.target.innerText === correct_answer) {
       setAnswer((answer) => ({ ...answer, correct: answer.correct + 1 }))
       setAnswerResponse('Correct')
       setScoreBar({ ...scoreBar, gray: gray(), lightgray: lightgray() })
@@ -97,20 +101,20 @@ export default function Quiz () {
   return (
     <QuizContainer>
       <QuizProgBar style={{ width: `${loadProgress}%` }} />
-      <QuizQuestionContainer>
-        <QuestionCategory>{quizArray[currentQuestion].category}</QuestionCategory>
-        <QuestionNumber>
-          <QuestionNo> Question {currentQuestion + 1} of {quizArray.length}</QuestionNo>
-          <QuestionDifficulty>
+      <div>
+        <p>{category}</p>
+        <div>
+          <h1> Question {currentQuestion + 1} of {quizArray.length}</h1>
+          <div>
             <Rating
               name='read-only'
               size='small'
               value={rating}
               readOnly
             />
-          </QuestionDifficulty>
-        </QuestionNumber>
-        <Question> {quizArray[currentQuestion].question} </Question>
+          </div>
+        </div>
+        <p> {question} </p>
         <QuizButtons>
           {options &&
             options.map((option, i) =>
@@ -137,75 +141,10 @@ export default function Quiz () {
               )}
           {result && <Button onClick={handleResult}> Try again ! </Button>}
         </NextQuestion>
-      </QuizQuestionContainer>
+      </div>
       <ScoreBar
         {...{ quizArray, score, maxScore, scoreBar }}
       />
     </QuizContainer>
   )
 }
-
-const QuizContainer = styled.div`
-  max-width: 60rem;
-  background-color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  margin: auto;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  overflow: hidden;
-  position: relative;
-  padding: 4rem;
-`
-
-const QuizProgBar = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 1rem;
-  background-color: black;
-  width: 0%;
-`
-const QuizQuestionContainer = styled.div``
-
-const QuestionCategory = styled.p``
-
-const QuestionNumber = styled.div``
-
-const QuestionNo = styled.h1``
-
-const QuestionDifficulty = styled.div``
-
-const Question = styled.p``
-
-const QuizButtons = styled.div`
-    display: flex;
-    justify: space-between;    
-    flex-wrap: wrap;
-   
-
-`
-
-const InformAnswer = styled.h2`
-    text-align: center;
-    color: black;
-`
-
-const Button = styled.button`
-    cursor: pointer;
-    width: 40%;
-    padding: 0.5rem 1rem;
-    margin: auto;
-    margin: 1rem;
-    @media (max-width: 600px) {
-          display: block;
-          width:100% ;
-          margin-bottom: 1rem;
-    }
-`
-
-const NextQuestion = styled.div`
-    display: flex;
-    justify-content: center;
-
-`

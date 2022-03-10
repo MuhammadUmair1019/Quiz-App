@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import Quiz from './components/quiz'
+import Quiz from './components/Quiz'
 
 function App () {
   return (
